@@ -73,7 +73,7 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
     int pipeIndex = 0;
     int got = 0;
 
-    do{
+    while(1){
         int anotherPipe = (pipeIndex+1)%2;
         if(pipesSize[pipeIndex] > 0){
             for(int i=0; i<pipesSize[pipeIndex]; i++){
@@ -110,7 +110,7 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
         mutationCnt++;
         pipesSize[pipeIndex] = 0;
         pipeIndex = (pipeIndex+1)%2;
-    }while(1);
+    }
 
     free (pipes[1]);
     free (pipes[0]);
