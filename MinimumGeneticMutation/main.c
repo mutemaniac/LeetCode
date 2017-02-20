@@ -71,6 +71,7 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
     pipes[0][0] = row-1;
     mark[row-1] = 1;
     int pipeIndex = 0;
+    int got = 0;
 
     do{
         int anotherPipe = (pipeIndex+1)%2;
@@ -78,15 +79,17 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
             for(int i=0; i<pipesSize[pipeIndex]; i++){
                 int oneGen = pipes[pipeIndex][i];
                 if(oneGen == endIndex){
-                    free (pipes[1]);
-                    free (pipes[0]);
-                    free (pipes);
-                    free (mark);
-                    for (int i = 0; i < row; i++)
-                        free (graph[i]);
-                    free (mutationsSize);
-                    free (graph);
-                    return mutationCnt;
+                    // free (pipes[1]);
+                    // free (pipes[0]);       
+                    // free (pipes);
+                    // free (mark);
+                    // for (int i = 0; i < row; i++)
+                    //     free (graph[i]);
+                    // free (mutationsSize);
+                    // free (graph);
+                    // return mutationCnt;
+                    got = 1;
+                    break;
                 }else{
                     for(int j=0;j<mutationsSize[oneGen]; j++){
                         if(!mark[graph[oneGen][j]]){
@@ -99,6 +102,9 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
                 }
             }
         }else{
+            break;
+        }
+        if(got){
             break;
         }
         mutationCnt++;
@@ -114,6 +120,9 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
         free (graph[i]);
     free (mutationsSize);
     free (graph);
+    if(got){
+        return mutationCnt;
+    }
     return -1;    
 }
 
@@ -133,11 +142,11 @@ int main(){
     // char*  start = "AAAAACCC";
     // char*  end =   "AACCCCCC";
     // char*  bank[] = {"AAAACCCC", "AAACCCCC", "AACCCCCC"};
-    char*  start8 = "AAAACCCC";
-    char*  end8 = "CCCCCCCC";
-    char*  bank8[] = {"AAAACCCA","AAACCCCA","AACCCCCA","AACCCCCC","ACCCCCCC","CCCCCCCC","AAACCCCC","AACCCCCC"};
-    int ret = minMutation(start8, end8, bank8, 8);
-    printf("ret=%d\n", ret);
+    // char*  start8 = "AAAACCCC";
+    // char*  end8 = "CCCCCCCC";
+    // char*  bank8[] = {"AAAACCCA","AAACCCCA","AACCCCCA","AACCCCCC","ACCCCCCC","CCCCCCCC","AAACCCCC","AACCCCCC"};
+    // int ret = minMutation(start8, end8, bank8, 8);
+    // printf("ret=%d\n", ret);
     
     
     return 0;
