@@ -21,7 +21,7 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
     int row = bankSize+1;
     int col = bankSize>strlen(start)?strlen(start):bankSize;
     int** graph = (int**)malloc(row*sizeof(int*));
-    int* mutationsSize = (int*)malloc(row);
+    int* mutationsSize = (int*)malloc(row*sizeof(int));
     for(int i=0; i<row-1; i++){
         graph[i] = (int*)malloc(col*sizeof(int));
         memset(graph[i], 0, col*sizeof(int));
@@ -71,7 +71,6 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
     pipes[0][0] = row-1;
     mark[row-1] = 1;
     int pipeIndex = 0;
-    int got = 0;
 
     while(1){
         int anotherPipe = (pipeIndex+1)%2;
@@ -79,17 +78,15 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
             for(int i=0; i<pipesSize[pipeIndex]; i++){
                 int oneGen = pipes[pipeIndex][i];
                 if(oneGen == endIndex){
-                    // free (pipes[1]);
-                    // free (pipes[0]);       
-                    // free (pipes);
-                    // free (mark);
-                    // for (int i = 0; i < row; i++)
-                    //     free (graph[i]);
-                    // free (mutationsSize);
-                    // free (graph);
-                    // return mutationCnt;
-                    got = 1;
-                    break;
+                    free (pipes[1]);
+                    free (pipes[0]);       
+                    free (pipes);
+                    free (mark);
+                    for (int i = 0; i < row; i++)
+                        free (graph[i]);
+                    free (mutationsSize);
+                    free (graph);
+                    return mutationCnt;
                 }else{
                     for(int j=0;j<mutationsSize[oneGen]; j++){
                         if(!mark[graph[oneGen][j]]){
@@ -102,9 +99,6 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
                 }
             }
         }else{
-            break;
-        }
-        if(got){
             break;
         }
         mutationCnt++;
@@ -120,9 +114,7 @@ int minMutation(char* start, char* end, char** bank, int bankSize) {
         free (graph[i]);
     free (mutationsSize);
     free (graph);
-    if(got){
-        return mutationCnt;
-    }
+
     return -1;    
 }
 
